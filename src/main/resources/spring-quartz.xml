@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd" default-lazy-init="true">
+
+    <!-- 配置调度器工厂(SchedulerFactoryBean) -->
+    <bean name="startQuartz"
+          class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="myJobTrigger" />
+            </list>
+        </property>
+    </bean>
+
+
+    <!-- 配置Cron触发器(CronTriggerFactoryBean) -->
+    <bean id="myJobTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail">
+            <ref bean="myJobDetail" />
+        </property>
+        <property name="cronExpression">
+            <!-- 每隔45秒钟执行一次 0/45 * * * * ? -->
+            <!-- 本月最后一天0 0 0 L * ? -->
+            <!-- 每一天执行一次0 0 0 1/1 * ? * -->
+            <!-- 每天1点执行0 0 1 * * ? * -->
+            <!-- 指定某几个时刻运行 0 0 1,2,3,4,5,6 * * ?  -->
+            <!-- 每个小时执行一次 0 0 0/1 * * ?  -->
+<!--            <value>0 0/1 * * * ?</value>&lt;!&ndash; 这里是每分钟执行一次 &ndash;&gt;-->
+            <value>0/10 * * * * ?</value><!-- 这里是每分钟执行一次 -->
+        </property>
+    </bean>
+
+    <!-- 配置方法调用任务工厂(XXXJobDetailFactoryBean（操作没有大字段的表）) -->
+    <bean id="myJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <!-- 上一个任务执行完再触发下一次任务 -->
+        <property name="concurrent" value="false"/>
+        <property name="targetObject">
+            <ref bean="myJob" />
+        </property>
+        <!-- 要执行的方法 -->
+        <property name="targetMethod">
+            <value>run</value>
+        </property>
+    </bean>
+    <!-- 需要执行定时任务的类 -->
+    <bean id="myJob" class="com.quartz.test.controller.QuartzTest" />
+</beans>
