@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ImportResource;
 @SpringBootApplication
 @MapperScan(basePackages="com.generator.dao")
 @ImportResource(locations = {"classpath:spring-mvc.xml"})
-//拦截器注解
+//拦截器和监听器注解
 @ServletComponentScan
 public class DxlApplication {
 
