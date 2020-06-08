@@ -20,6 +20,8 @@ public class QuartzTest {
 		if(LOG.isInfoEnabled()){
 			LOG.info("测试任务开始执行");
 		}
+		int d=999999999+18888+99;
 		System.out.println("配置文件定时器......");
+		System.err.println("求和："+d);
 	}
 }

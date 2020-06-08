@@ -112,9 +112,14 @@ public class MybatisTsets {
 				season.YQR.getTesk();
 		}
 
-
+		System.err.println(season.DJF.name());
+		System.err.println(seasons.DJF.name());
+		String sa = seasons.getBizType("P212121E2");
+		System.out.println(sa);
+		String e2 = seasons.getBizType("P212121-02");
+		System.out.println(e2);
 		if (season.DJF.equals(ts)) {
-			System.err.println(season.DJF.getTesk());
+			System.err.println(season.DJF.name());
 		}
 
 //		System.out.println(wing.name()+"下标---"+wing.ordinal()+"wing.getNum()---"+wing.getNum());
@@ -132,6 +137,7 @@ public class MybatisTsets {
 		for (String cd : strings) {
 			System.out.println(cd+"----"+strMap.get(cd));
 		}
+
 	}
 
 	@Test
@@ -211,7 +217,7 @@ enum season {
 	DJF("待缴费") {
 		public String exexTsk(String agr) {
 			UserServiceImpl userService = new UserServiceImpl();
-			userService.queryById("000001");
+//			userService.queryById("000001");
 			return "简单处理DJF业务";
 		}
 	},
@@ -244,32 +250,20 @@ enum season {
 }
 
 enum seasons {
-	DJF("待缴费", "a"),
-	YQR("已确认","b"),
-	WDB("未打包", "c"),
-	YDZ("已到账", "d");
-	String tesk;
-	String liNo;
+	DJF,
+	YQR,
+	WDB,
+	YDZ;
 
-	seasons(String tesk, String liNo) {
-		this.tesk = tesk;
-		this.liNo = liNo;
-	}
-
-	public String getTesk() {
-		return tesk;
-	}
-
-	public String getLiNo() {
-		return liNo;
-	}
-
-	public void setTesk(String tesk) {
-		this.tesk = tesk;
-	}
-
-	public void setLiNo(String liNo) {
-		this.liNo = liNo;
+	public static String getBizType(String bizNo) {
+		if (bizNo == null || "".equals(bizNo)) throw new IllegalArgumentException("业务号不允许为空");
+		if (bizNo.startsWith("Q")) return "TYPE_Q";
+		if (bizNo.startsWith("X")) return "TYPE_X";
+		if (bizNo.split("[-E]").length == 2) {
+			return bizNo.startsWith("F") ? "TYPE_EF" : bizNo.startsWith("P") ? "TYPE_E" : null;
+		} else {
+			return bizNo.startsWith("F") ? "TYPE_F" : bizNo.startsWith("P") ? "TYPE_P" : null;
+		}
 	}
 }
 

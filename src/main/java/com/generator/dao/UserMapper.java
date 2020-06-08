@@ -1,22 +1,19 @@
 package com.generator.dao;
 
 import com.generator.entity.User;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@Mapper
 public interface UserMapper {
-    public int deleteByPrimaryKey(String userid);
+    int deleteByPrimaryKey(String userid);
 
-    public int insert(User record);
+    int insert(User record);
 
-    public  int insertSelective(User record);
-//    @Select("select * from user where userid=#{userid}")
-    public User selectByPrimaryKey(String userid);
+    int insertSelective(User record);
 
-    public  int updateByPrimaryKeySelective(User record);
+    User selectByPrimaryKey(String userid);
 
-    public int updateByPrimaryKey(User record);
+    int updateByPrimaryKeySelective(User record);
+
+    int updateByPrimaryKey(User record);
 }
