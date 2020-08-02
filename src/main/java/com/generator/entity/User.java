@@ -3,17 +3,19 @@ package com.generator.entity;
 import java.util.Date;
 
 public class User {
-    private String userid;
+    public String userid;
 
-    private String password;
+    public String password;
 
-    private String username;
+    public String username;
 
-    private Date creatdate;
+    public Date creatdate;
 
-    private Date updatedate;
+    public Date updatedate;
 
-    private String satatus;
+    public String satatus;
+
+
 
     public String getUserid() {
         return userid;
@@ -61,5 +63,17 @@ public class User {
 
     public void setSatatus(String satatus) {
         this.satatus = satatus == null ? null : satatus.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                       "userid='" + userid + '\'' +
+                       ", password='" + password + '\'' +
+                       ", username='" + username + '\'' +
+                       ", creatdate=" + creatdate +
+                       ", updatedate=" + updatedate +
+                       ", satatus='" + satatus + '\'' +
+                       '}';
     }
 }

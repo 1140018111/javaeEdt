@@ -4,14 +4,18 @@ import com.DxlApplication;
 import com.generator.dao.UserContrImpl;
 import com.generator.dao.UserMapper;
 import com.generator.dao.UserServiceImpl;
-import com.generator.entity.User;
+import com.generator.entity.*;
+import com.until.BeanUtil;
 import org.apache.ibatis.annotations.Case;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -101,6 +105,8 @@ public class MybatisTsets {
 	@Test
 	public void enumTst() {
 		String ts = "DJF";
+		System.out.println("名字="+season.DJF.name());
+
 		switch (ts) {
 			case "DJF":
 				season.DJF.exexTsk(ts);
@@ -137,6 +143,28 @@ public class MybatisTsets {
 		for (String cd : strings) {
 			System.out.println(cd+"----"+strMap.get(cd));
 		}
+
+
+		Anmals anmals = new Anmals();
+		Pson pson = new Pson();
+		Dog dog = new Dog();
+		dog.setTou("datou");
+		dog.setYibai("xiaoyiba");
+
+		anmals.setUserid("999");
+		pson.setUserName("xiaobai");
+		pson.setPassword("123");
+		pson.setSataTus("21");
+		pson.setDog(dog);
+		BeanUtil.copyPropertiesASM(pson,anmals);
+
+//		BeanUtils.copyProperties(pson,anmals);
+		System.out.println(pson);
+		System.out.println(anmals);
+
+//		char[] chars = "UserName".toCharArray();
+//		System.out.println(chars[0]);
+
 
 	}
 

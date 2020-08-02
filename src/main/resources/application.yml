@@ -14,3 +14,4 @@ spring:
 mybatis:
   mapper-locations: classpath:MybatisMapper/*.xml
   type-aliases-package: com.generator.dao
+

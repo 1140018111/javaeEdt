@@ -11,7 +11,7 @@ import java.io.IOException;
  * @author DL
  * @create 2020-06-08
  */
-@WebFilter(filterName = "用户拦截器",urlPatterns = "/query/a")
+@WebFilter(filterName = "用户拦截器",urlPatterns = "/query/b")
 public class FilterTest implements javax.servlet.Filter {
 	@Override
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {

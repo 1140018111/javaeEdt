@@ -4,6 +4,8 @@ import com.generator.entity.User;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * com.generator.dao
  * dxl
@@ -16,5 +18,5 @@ public interface UserContr {
 	/**
 	 *查询
 	 */
-	public String queey();
+	public User queey(HttpServletRequest request);
 }
