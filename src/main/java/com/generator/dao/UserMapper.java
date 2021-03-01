@@ -1,9 +1,13 @@
 package com.generator.dao;
 
 import com.generator.entity.User;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-@Repository
+@Mapper
+@Component(value = "userMapper")
 public interface UserMapper {
     int deleteByPrimaryKey(String userid);
 

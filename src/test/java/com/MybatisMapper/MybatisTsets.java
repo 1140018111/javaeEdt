@@ -1,29 +1,19 @@
 package com.MybatisMapper;
 
-import com.DxlApplication;
-import com.generator.dao.UserContrImpl;
 import com.generator.dao.UserMapper;
-import com.generator.dao.UserServiceImpl;
 import com.generator.entity.*;
-import com.until.BeanUtil;
-import org.apache.ibatis.annotations.Case;
-import org.apache.tomcat.util.http.fileupload.FileUtils;
+import com.generator.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * com.MybatisMapper
@@ -51,6 +41,17 @@ public class MybatisTsets {
 //		System.out.println(user.toString());
 		System.out.println(user1.toString());
 //		UserContrImpl.queey();
+		ceshiLIst();
+
+	}
+
+	private void ceshiLIst() {
+		Dog dog = new Dog();
+		Cat cat = new Cat();
+		dog.setCat(cat);
+		System.err.println(dog);
+
+
 
 	}
 
@@ -134,8 +135,8 @@ public class MybatisTsets {
 
 	@Test
 	public void ts3() {
-		seasons djf = seasons.DJF;
-		HashMap<String, String> strMap = new HashMap<>();
+
+		Map<String, String> strMap = new HashMap<String, String>();
 		strMap.put("jiang", "12");
 		strMap.put("yu", "15");
 		strMap.put("dou", "19");
@@ -156,11 +157,11 @@ public class MybatisTsets {
 		pson.setPassword("123");
 		pson.setSataTus("21");
 		pson.setDog(dog);
-		BeanUtil.copyPropertiesASM(pson,anmals);
+//		BeanUtil.copyPropertiesASM(pson,anmals);
 
 //		BeanUtils.copyProperties(pson,anmals);
-		System.out.println(pson);
-		System.out.println(anmals);
+//		System.out.println(pson);
+//		System.out.println(anmals);
 
 //		char[] chars = "UserName".toCharArray();
 //		System.out.println(chars[0]);
@@ -170,6 +171,19 @@ public class MybatisTsets {
 
 	@Test
 	public void fileTest() {
+		Random random=new Random();
+		String[] red={"01","02","03","04","05","06","07","08","09","10","11","12",
+				"13","14","15","16","17","18","19","20","21","22","23","24","25",
+				"26","27","28","29","30","31","32","33"};
+		String[] bule={"01","02","03","04","05","06","07","08","09","10","11","12",
+				"13","14","15","16"};
+		//
+		getRandomArea(random, red, red.length);
+		getRandomArea(random, red, bule.length);
+		//爬取数据历期开奖记录
+
+
+
 //		File file = new File("fic");
 //		boolean mkdir = file.mkdir();
 //		File file1 = new File(file.getAbsolutePath(), "1.java");
@@ -180,7 +194,7 @@ public class MybatisTsets {
 //		}
 //		new File("two").mkdir();
 
-		File d = new File("fic");
+//		File d = new File("fic");fic
 //		File eFile = d.getAbsoluteFile();
 //		File[] files = d.listFiles(new FileFilter() {
 //			@Override
@@ -213,8 +227,37 @@ public class MybatisTsets {
 //		} catch (IOException e) {
 //			e.printStackTrace();
 //		}
-		ster(d);
+//		ster(d);
 
+	}
+
+	private List<String> getRandomArea(Random random, String[] red, int length) {
+		String newNo;
+		int number=1;
+		List<String> area=new ArrayList<String>();
+		switch (length) {
+			case 33:
+				number=6;
+				break; //可选
+			default: //可选
+				number=1;
+		}
+		for(int i=0;i<number;i++){
+			int nextInt = random.nextInt(length);
+			if(nextInt==0) {
+				i-- ;
+				continue;
+			}
+			newNo=red[nextInt-1];
+			if(area.contains(newNo)){
+				i--;
+			}else {
+				area.add(newNo);
+			}
+		}
+		area=area.stream().sorted().collect(Collectors.toList());
+		System.err.print(area);
+		return area;
 	}
 
 	public static void ster(File s) {
@@ -232,19 +275,18 @@ public class MybatisTsets {
 		});
 		for ( File fv: files) {
 			if(fv.isDirectory()) ster(fv);
-			else System.out.println(fv.getName());
+			else System.out.print(fv.getName());
 		}
 
-
-
 	}
+
 }
 
 
 enum season {
 	DJF("待缴费") {
 		public String exexTsk(String agr) {
-			UserServiceImpl userService = new UserServiceImpl();
+			UserService userService = new UserService();
 //			userService.queryById("000001");
 			return "简单处理DJF业务";
 		}

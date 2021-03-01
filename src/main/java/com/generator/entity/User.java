@@ -1,7 +1,11 @@
 package com.generator.entity;
 
-import java.util.Date;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
+import java.util.Date;
+@Component
+@Scope("prototype")
 public class User {
     public String userid;
 

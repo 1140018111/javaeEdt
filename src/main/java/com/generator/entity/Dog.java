@@ -11,6 +11,15 @@ public class Dog {
 	public String yibai;
 	public String tou;
 	public String paole;
+	public Cat cat;
+
+	public Cat getCat() {
+		return cat;
+	}
+
+	public void setCat(Cat cat) {
+		this.cat = cat;
+	}
 
 	public String getYibai() {
 		return yibai;
@@ -42,6 +51,7 @@ public class Dog {
 					   "yibai='" + yibai + '\'' +
 					   ", tou='" + tou + '\'' +
 					   ", paole='" + paole + '\'' +
+					   ", cat=" + cat +
 					   '}';
 	}
 }

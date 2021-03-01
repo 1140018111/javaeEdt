@@ -1,10 +1,9 @@
-package com.generator.dao;
+package com.generator.service;
 
 
 import com.generator.dao.UserMapper;
 import com.generator.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,13 +13,13 @@ import org.springframework.stereotype.Service;
  * @author DL
  * @create 2020-05-24
  */
-@Component
-public class UserServiceImpl implements UserServiceInface{
+@Service
+public class UserService implements UserServiceInface {
 
 	@Autowired
 	private UserMapper userMapper;
 
-	@Override
+
 	public User queryById(String id) {
 		System.out.println("service+++++");
 		return this.userMapper.selectByPrimaryKey(id);

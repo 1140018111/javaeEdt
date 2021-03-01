@@ -1,9 +1,7 @@
-package com.generator.dao;
+package com.generator.service;
 
 
 import com.generator.entity.User;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 /**
  * com.generator.dao
@@ -12,7 +10,6 @@ import org.springframework.stereotype.Service;
  * @author DL
  * @create 2020-05-24
  */
-@Component
 public interface UserServiceInface {
 	/**
 	 * idc查询

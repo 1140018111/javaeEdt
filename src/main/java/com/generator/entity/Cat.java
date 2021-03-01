@@ -11,6 +11,8 @@ public class Cat {
 	public String mao;
 	public String tou;
 	public String yiBai;
+	private Dog dog;
+
 
 	public String getMao() {
 		return mao;
@@ -43,5 +45,13 @@ public class Cat {
 					   ", tou='" + tou + '\'' +
 					   ", yiBai='" + yiBai + '\'' +
 					   '}';
+	}
+
+	public Dog getDog() {
+		return dog;
+	}
+
+	public void setDog(Dog dog) {
+		this.dog = dog;
 	}
 }

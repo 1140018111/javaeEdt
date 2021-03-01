@@ -30,7 +30,7 @@ import java.util.Properties;
 @EnableScheduling
 public class TimeOne {
 	@Autowired
-	private KafkaListenerEndpointRegistry registry;
+//	private KafkaListenerEndpointRegistry registry;
 	public static void main(String[] args) {
 		Properties prop = new Properties();
 //		prop.load(kafka.class.getClassLoader().getResourceAsStream("kafkaConf/producer.properties"));
@@ -64,18 +64,18 @@ public class TimeOne {
 
 	}
 	// 定时器，每天凌晨0点开启监听
-	@Scheduled(cron = "")
-	public void startListener() {
-		// 判断监听容器是否启动，未启动则将其启动
-		if (!registry.getListenerContainer("durable").isRunning()) {
-			registry.getListenerContainer("durable").start();
-		}
-		registry.getListenerContainer("durable").resume();
-	}
-	// 定时器，每天早上6点关闭监听
-	@Scheduled(cron = "")
-	public void shutDownListener() {
-		registry.getListenerContainer("durable").pause();
-	}
+//	@Scheduled(cron = "")
+//	public void startListener() {
+//		// 判断监听容器是否启动，未启动则将其启动
+//		if (!registry.getListenerContainer("durable").isRunning()) {
+//			registry.getListenerContainer("durable").start();
+//		}
+//		registry.getListenerContainer("durable").resume();
+//	}
+//	// 定时器，每天早上6点关闭监听
+//	@Scheduled(cron = "")
+//	public void shutDownListener() {
+//		registry.getListenerContainer("durable").pause();
+//	}
 
 }

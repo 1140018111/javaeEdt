@@ -1,9 +1,7 @@
 package com.shiro;
 
-import com.generator.dao.UserMapper;
-import com.generator.dao.UserServiceImpl;
 import com.generator.entity.User;
-import com.until.ApplicationContextUtils;
+import com.generator.service.UserService;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -12,7 +10,6 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -47,7 +44,7 @@ public class CustomerRealm extends AuthorizingRealm {
 //		User user = userMapper.queryById(principal);
 //		UserServiceImpl userServiceImpl = (UserServiceImpl) ApplicationContextUtils.getBean("userServiceImpl");
 
-		UserServiceImpl userServiceImpl = new UserServiceImpl();
+		UserService userServiceImpl = new UserService();
 		System.out.println(userServiceImpl);
 		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder
 																		.getRequestAttributes())
