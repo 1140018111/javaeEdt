@@ -1,22 +1,13 @@
 package com.generator.dao;
 
+import com.data.interdata.lotterydata.NetData;
 import com.generator.entity.User;
-import com.generator.service.UserService;
 import com.generator.service.UserServiceInface;
-import junit.textui.TestRunner;
-import net.minidev.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.stereotype.Component;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * com.generator.dao
@@ -31,14 +22,14 @@ public class DaoTest {
 	@Autowired
 	private UserServiceInface userServiceInface;
 	@Autowired
-	private UserMapper userMapper;
+	private LotterySsqMapper lotterySsqMapper;
+	@Autowired
+	private NetData netData;
 
 	@Test
 	public void danTest() {
 		User user = userServiceInface.queryById("000001");
-		User user1 = userMapper.selectByPrimaryKey("000001");
 		System.out.println(user.toString());
-		System.out.println(user1.toString());
 //		User user = new User();
 		Class<User> userClass = User.class;
 		System.out.println(userClass);
@@ -52,5 +43,17 @@ public class DaoTest {
 //		JSONArray.parseArray(r, WorkItem.class);
 
 
+	}
+
+	@Test
+	public void lotTest() {
+		netData.getNewLOt();
+//		LotterySsq lot=new LotterySsq();
+//		lot.setVersionid("002");
+//		lot.setRedareal("01921");
+//		lot.setBuleareal("13");
+//		LotterySsq lotterySsq = lotterySsqMapper.selectByPrimaryKey("001");
+//		int insert = lotterySsqMapper.insert(lot);
+//		System.out.println(insert);
 	}
 }

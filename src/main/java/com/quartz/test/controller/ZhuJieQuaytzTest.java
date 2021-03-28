@@ -16,9 +16,9 @@ import org.springframework.stereotype.Component;
 @Configurable
 @EnableScheduling
 public class ZhuJieQuaytzTest {
-	@Scheduled(cron = "0/5 * * * * ?")
-	public void report(){
-		System.out.println("注解定时器.....");
-	}
+//	@Scheduled(cron = "0/5 * * * * ?")
+//	public void report(){
+//		System.out.println("注解定时器.....");
+//	}
 
 }

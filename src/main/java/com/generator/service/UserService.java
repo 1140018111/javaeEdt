@@ -20,6 +20,7 @@ public class UserService implements UserServiceInface {
 	private UserMapper userMapper;
 
 
+	@Override
 	public User queryById(String id) {
 		System.out.println("service+++++");
 		return this.userMapper.selectByPrimaryKey(id);

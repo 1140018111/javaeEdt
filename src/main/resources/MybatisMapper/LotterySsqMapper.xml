@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.generator.dao.LotterySsqMapper">
+  <resultMap id="BaseResultMap" type="com.generator.lottery.entity.LotterySsq">
+    <id column="versionId" jdbcType="VARCHAR" property="versionid" />
+    <result column="redAreal" jdbcType="VARCHAR" property="redareal" />
+    <result column="buleAreal" jdbcType="VARCHAR" property="buleareal" />
+    <result column="executeDate" jdbcType="TIMESTAMP" property="executedate" />
+    <result column="salesAmount" jdbcType="VARCHAR" property="salesamount" />
+    <result column="jackpot" jdbcType="VARCHAR" property="jackpot" />
+    <result column="inputDate" jdbcType="TIMESTAMP" property="inputdate" />
+    <result column="flag" jdbcType="VARCHAR" property="flag" />
+    <result column="reserve" jdbcType="VARCHAR" property="reserve" />
+    <result column="spare" jdbcType="VARCHAR" property="spare" />
+    <result column="backUp" jdbcType="VARCHAR" property="backup" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    versionId, redAreal, buleAreal, executeDate, salesAmount, jackpot, inputDate, flag, 
+    reserve, spare, backUp
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lotteryssq
+    where versionId = #{versionid,jdbcType=VARCHAR}
+  </select>
+  <select id="queryNew" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from lotteryssq
+    where  ${condition}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from lotteryssq
+    where versionId = #{versionid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.generator.lottery.entity.LotterySsq">
+    insert into lotteryssq (versionId, redAreal, buleAreal, 
+      executeDate, salesAmount, jackpot, 
+      inputDate, flag, reserve, 
+      spare, backUp)
+    values (#{versionid,jdbcType=VARCHAR}, #{redareal,jdbcType=VARCHAR}, #{buleareal,jdbcType=VARCHAR}, 
+      #{executedate,jdbcType=TIMESTAMP}, #{salesamount,jdbcType=VARCHAR}, #{jackpot,jdbcType=VARCHAR}, 
+      #{inputdate,jdbcType=TIMESTAMP}, #{flag,jdbcType=VARCHAR}, #{reserve,jdbcType=VARCHAR}, 
+      #{spare,jdbcType=VARCHAR}, #{backup,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.generator.lottery.entity.LotterySsq">
+    insert into lotteryssq
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="versionid != null">
+        versionId,
+      </if>
+      <if test="redareal != null">
+        redAreal,
+      </if>
+      <if test="buleareal != null">
+        buleAreal,
+      </if>
+      <if test="executedate != null">
+        executeDate,
+      </if>
+      <if test="salesamount != null">
+        salesAmount,
+      </if>
+      <if test="jackpot != null">
+        jackpot,
+      </if>
+      <if test="inputdate != null">
+        inputDate,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+      <if test="reserve != null">
+        reserve,
+      </if>
+      <if test="spare != null">
+        spare,
+      </if>
+      <if test="backup != null">
+        backUp,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="versionid != null">
+        #{versionid,jdbcType=VARCHAR},
+      </if>
+      <if test="redareal != null">
+        #{redareal,jdbcType=VARCHAR},
+      </if>
+      <if test="buleareal != null">
+        #{buleareal,jdbcType=VARCHAR},
+      </if>
+      <if test="executedate != null">
+        #{executedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesamount != null">
+        #{salesamount,jdbcType=VARCHAR},
+      </if>
+      <if test="jackpot != null">
+        #{jackpot,jdbcType=VARCHAR},
+      </if>
+      <if test="inputdate != null">
+        #{inputdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=VARCHAR},
+      </if>
+      <if test="reserve != null">
+        #{reserve,jdbcType=VARCHAR},
+      </if>
+      <if test="spare != null">
+        #{spare,jdbcType=VARCHAR},
+      </if>
+      <if test="backup != null">
+        #{backup,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.generator.lottery.entity.LotterySsq">
+    update lotteryssq
+    <set>
+      <if test="redareal != null">
+        redAreal = #{redareal,jdbcType=VARCHAR},
+      </if>
+      <if test="buleareal != null">
+        buleAreal = #{buleareal,jdbcType=VARCHAR},
+      </if>
+      <if test="executedate != null">
+        executeDate = #{executedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesamount != null">
+        salesAmount = #{salesamount,jdbcType=VARCHAR},
+      </if>
+      <if test="jackpot != null">
+        jackpot = #{jackpot,jdbcType=VARCHAR},
+      </if>
+      <if test="inputdate != null">
+        inputDate = #{inputdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=VARCHAR},
+      </if>
+      <if test="reserve != null">
+        reserve = #{reserve,jdbcType=VARCHAR},
+      </if>
+      <if test="spare != null">
+        spare = #{spare,jdbcType=VARCHAR},
+      </if>
+      <if test="backup != null">
+        backUp = #{backup,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where versionId = #{versionid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.generator.lottery.entity.LotterySsq">
+    update lotteryssq
+    set redAreal = #{redareal,jdbcType=VARCHAR},
+      buleAreal = #{buleareal,jdbcType=VARCHAR},
+      executeDate = #{executedate,jdbcType=TIMESTAMP},
+      salesAmount = #{salesamount,jdbcType=VARCHAR},
+      jackpot = #{jackpot,jdbcType=VARCHAR},
+      inputDate = #{inputdate,jdbcType=TIMESTAMP},
+      flag = #{flag,jdbcType=VARCHAR},
+      reserve = #{reserve,jdbcType=VARCHAR},
+      spare = #{spare,jdbcType=VARCHAR},
+      backUp = #{backup,jdbcType=VARCHAR}
+    where versionId = #{versionid,jdbcType=VARCHAR}
+  </update>
+</mapper>

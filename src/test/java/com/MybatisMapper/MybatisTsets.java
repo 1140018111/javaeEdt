@@ -1,14 +1,21 @@
 package com.MybatisMapper;
 
+import com.data.interdata.lotterydata.AllBalls;
+import com.data.interdata.lotterydata.NetData;
 import com.generator.dao.UserMapper;
 import com.generator.entity.*;
+import com.generator.lottery.entity.LotterySsq;
+import com.generator.lottery.service.impl.SsqServiceImpl;
 import com.generator.service.UserService;
+import com.lotteryms.kinds.WeifareSSQ;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -25,12 +32,21 @@ import java.util.stream.Collectors;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @DirtiesContext
+@ComponentScan
 public class MybatisTsets {
 	//
 //	@Autowired
 //	private UserServiceImpl userServiceInface;
 	@Autowired
 	private UserMapper userMapper;
+	@Autowired
+	private AllBalls allBalls;
+	@Autowired
+	private static WeifareSSQ weifareSSQ;
+	@Autowired
+	private static NetData  netData;
+	@Autowired
+	private SsqServiceImpl ssqService;
 
 	//	@Autowired
 //	private UserContrImpl UserContrImpl;
@@ -169,20 +185,10 @@ public class MybatisTsets {
 
 	}
 
+
+	//彩票程序
 	@Test
-	public void fileTest() {
-		Random random=new Random();
-		String[] red={"01","02","03","04","05","06","07","08","09","10","11","12",
-				"13","14","15","16","17","18","19","20","21","22","23","24","25",
-				"26","27","28","29","30","31","32","33"};
-		String[] bule={"01","02","03","04","05","06","07","08","09","10","11","12",
-				"13","14","15","16"};
-		//
-		getRandomArea(random, red, red.length);
-		getRandomArea(random, red, bule.length);
-		//爬取数据历期开奖记录
-
-
+	public void fileTest() throws Exception {
 
 //		File file = new File("fic");
 //		boolean mkdir = file.mkdir();
@@ -335,5 +341,6 @@ enum seasons {
 			return bizNo.startsWith("F") ? "TYPE_F" : bizNo.startsWith("P") ? "TYPE_P" : null;
 		}
 	}
+
 }
 
