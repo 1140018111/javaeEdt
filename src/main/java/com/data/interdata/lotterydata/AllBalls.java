@@ -1,10 +1,14 @@
 package com.data.interdata.lotterydata;
 
+import com.data.loderdate.LotSticData;
 import com.generator.lottery.entity.LotterySsq;
 import com.generator.lottery.service.impl.SsqServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -32,10 +36,21 @@ public class AllBalls  {
 	private static List<String> twoSBuffer = null;
 //	private static ExecutorService threadPool = Executors.newFixedThreadPool(10);
 
-	public  void netAllLotData() throws Exception {
+	/**
+	 *
+	 * 参数pageAmount页数  一页20个
+	 * 参数type操作类型
+	 * 1.爬取所有数据 insert
+	 * 2.数据校对补数 update 可进行页数控制更新量
+	 * @throws Exception
+	 */
+	public  void netAllLotData(int pageAmount,String type) throws Exception {
 		logger.info("正在获取...");
+		if(StringUtils.isEmpty(type)) throw new RuntimeException("操作类型type不能为空！！！");
 		String pageCountContent = getHtmlString(homeUrl);
-		int pageCount = getPageCount(pageCountContent);
+		boolean ISINSERT = LotSticData.INSERT.equals(type);
+		boolean ISUPDATE = LotSticData.UPDATE.equals(type);
+		int pageCount = ISINSERT ? getPageCount(pageCountContent): ISUPDATE ? pageAmount : 0;
 		try {
 			if (pageCount > 0) {
 				for (int i = 1; i <= pageCount; i++) {
@@ -54,7 +69,7 @@ public class AllBalls  {
 						getOneTermContent(pageContent);
 						//入库
 						logger.info("===当前存储页："+i+" 开始入库===");
-						inputData(pageCount,i);
+						inputData(pageCount,i,ISUPDATE);
 						logger.info("===当前存储页："+i+" 入库完成===");
 					} else {
 						logger.info("===第" + i + "页丢失===");
@@ -80,8 +95,9 @@ public class AllBalls  {
 	 * 数据入库
 	 * @param pageCount 总页数
 	 * @param newPage   当前页
+	 * @param ISUPDATE  是否是更新操作
 	 */
-	private  void inputData(int pageCount,int newPage) {
+	void inputData(int pageCount,int newPage,boolean ISUPDATE) {
 		//赋值操作
 		LotterySsq lotterySsq =null;
 		ArrayList<LotterySsq>  lotterySsqs = new ArrayList<>();
@@ -98,6 +114,9 @@ public class AllBalls  {
 				lotterySsq.setSalesamount(amountBuffer.get(t).replaceAll(",",""));
 				lotterySsq.setInputdate(new Date());
 				lotterySsq.setFlag("0");
+				if(newPage==1&&t==0) {
+					lotterySsq.setFlag("1");
+				}
 				lotterySsq.setReserve(topSBuffer.get(t));
 				lotterySsq.setSpare(twoSBuffer.get(t));
 				lotterySsqs.add(lotterySsq);
@@ -105,7 +124,15 @@ public class AllBalls  {
 			for (int i = 0; i < lotterySsqs.size(); i++) {
 				LotterySsq record = lotterySsqs.get(i);
 				SsqServiceImpl ssqServiceImpl = (SsqServiceImpl)SpringUtil.getBean("ssqServiceImpl");
-				ssqServiceImpl.insert(record);
+				if(!ISUPDATE) {
+					ssqServiceImpl.insert(record);
+				}else{
+					if(StringUtils.isEmpty(ssqServiceImpl.getLot(record.getVersionid()))){
+						ssqServiceImpl.insert(record);
+					}else {
+						ssqServiceImpl.update(record);
+					}
+				}
 			}
 			logger.info(lotterySsqs.toString());
 		} catch (Exception e) {

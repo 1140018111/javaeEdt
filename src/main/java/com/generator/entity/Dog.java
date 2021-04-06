@@ -1,5 +1,8 @@
 package com.generator.entity;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+
 /**
  * com.generator.entity
  * dxl
@@ -7,6 +10,7 @@ package com.generator.entity;
  * @author DL
  * @create 2020-06-19
  */
+//@ConfigurationProperties(prefix = "anm.date")
 public class Dog {
 	public String yibai;
 	public String tou;

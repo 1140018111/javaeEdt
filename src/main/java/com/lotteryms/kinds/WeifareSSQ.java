@@ -37,6 +37,7 @@ public class WeifareSSQ extends WelfareLottery {
 	static Random random=new Random();
 
 	static LotterySsq lot =new LotterySsq();
+	static int count=1;
 	/**
 	 * 根据期号获取开奖号
 	 * @param versionId
@@ -62,8 +63,28 @@ public class WeifareSSQ extends WelfareLottery {
 	public String randomLottery() {
 		List<String> redArea = WeifareSSQ.getRandomArea(RED);
 		List<String> blueArea = WeifareSSQ.getRandomArea(BULE);
+		//去重操作
+		boolean life=quChong(redArea);
+		if(life){
+			//递归调用
+			randomLottery();
+		}
 		logger.info("生成的彩票号："+redArea.toString()+blueArea.toString());
 		return redArea.toString()+" "+blueArea.toString();
+	}
+
+	/**
+	 * 去重
+	 * @param redArea
+	 * @return
+	 */
+	private boolean quChong(List<String> redArea) {
+		StringBuffer redNo=new StringBuffer();
+		for (String s : redArea) {
+			redNo.append(s);
+		}
+		LotterySsq lotterySsq = serviceInterfaceImpl.queryForRed(redNo.toString());
+		return !StringUtils.isEmpty(lotterySsq);
 	}
 
 	/**
@@ -73,13 +94,6 @@ public class WeifareSSQ extends WelfareLottery {
 	public LotterySsq drawPrizeForNew() {
 		lot =serviceInterfaceImpl.queryForNewOne();
 		return lot;
-	}
-	/**
-	 * 获取最新一期的开奖号码
-	 * @return LotterySsq
-	 */
-	public void add(LotterySsq lot) throws Exception{
-		serviceInterfaceImpl.insert(lot);
 	}
 
 	/**
@@ -137,6 +151,40 @@ public class WeifareSSQ extends WelfareLottery {
 		}
 
 		return no+"";
+	}
+
+	/**
+	 * 根据上期号算法
+	 * @param number
+	 * @return
+	 */
+	public static String algorithmForBefourNo(String number){
+		number="101112132628";
+		char[] chars = number.toCharArray();
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		StringBuffer buffer = new StringBuffer();
+		for (int j = 0; j < chars.length; j++) {
+			if(buffer.length()==2){
+				list.add(Integer.parseInt(buffer.toString()));
+				buffer.delete(0,buffer.length());
+			}
+			buffer.append(chars[j]);
+		}
+		int sumb=0;
+		for (Integer integer : list) {
+			sumb=integer+sumb;
+		}
+		ArrayList<Integer> newList = new ArrayList<Integer>();
+		for (Integer item : list) {
+			int c=(sumb-item)/ item;
+			if(c>33){
+				newList.add(c%10);
+			}else{
+				newList.add(c);
+			}
+		}
+		System.out.println(sumb);
+		return null;
 	}
 
 }

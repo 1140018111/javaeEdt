@@ -18,4 +18,12 @@ public class LotSticData {
 	 * 最新号码状态
 	 */
 	public  static String  ZXSTATUS="1";
+	/**
+	 * 1.爬取所有数据 insert 2.数据校对补数 update
+	 */
+	public  static String  INSERT="INSERT";
+	/**
+	 * 1.爬取所有数据 insert 2.数据校对补数 update
+	 */
+	public  static String  UPDATE="UPDATE";
 }

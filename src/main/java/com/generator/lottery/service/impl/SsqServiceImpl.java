@@ -53,4 +53,10 @@ public class SsqServiceImpl implements SsqServiceInterface {
 		sure= BigInteger.ONE.toString().equals(yesOrNo+"")?true:false;
 		return sure;
 	}
+	public LotterySsq queryForRed(String red) {
+		coundition=new StringBuffer();
+		coundition.append(" redareal='"+red+"' ");
+		LotterySsq lotterySsq = lotterySsqMapper.queryNew(coundition.toString());
+		return lotterySsq;
+	}
 }

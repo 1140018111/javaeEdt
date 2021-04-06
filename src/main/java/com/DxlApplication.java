@@ -18,7 +18,6 @@ public class DxlApplication {
 	public static void main(String[] args) {
 
 		SpringApplication.run(DxlApplication.class, args);
-		System.out.println("dkjskdjs");
 
 
 	}

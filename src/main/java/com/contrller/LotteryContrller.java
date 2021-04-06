@@ -10,6 +10,9 @@ import com.lotteryms.kinds.WeifareSSQ;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +30,7 @@ import java.util.Date;
  */
 @RestController
 @RequestMapping("/lot_ssq")
+@PropertySource(value = "classpath:otherConf/lotConfig.properties")
 public class LotteryContrller {
 	private static Logger logger = LoggerFactory.getLogger(LotteryContrller.class);
 	@Autowired
@@ -39,28 +43,45 @@ public class LotteryContrller {
 	private SsqServiceImpl ssqService;
 	private static LotterySsq lot =null;
 	private static LotterySsq newLOt=null;
+	@Value("${SSQ}")
+	private String  ne;
 	/**
 	 * 随机彩票投注
 	 * @return
 	 */
 	@GetMapping("/sell")
-	public String randomPoduce() {
+	public String randomProduct() {
+		System.out.println(ne);
 		String lottery = weifareSSQ.randomLottery();
 		return lottery;
 	}
 	/**
-	 * 手工爬取数据存储Ω
+	 * 算法选取彩票投注
+	 * @return
+	 */
+	@GetMapping("/sell/ap")
+	public String algorithmProduct() {
+		LotterySsq lotterySsq = weifareSSQ.drawPrizeForNew();
+		//精妙算法
+		WeifareSSQ.algorithmForBefourNo(lotterySsq.getRedareal());
+//		ssqService.queryForRed()
+
+		return null;
+	}
+	/**
+	 * 手工爬取数据存储
 	 * @returnΩ
 	 */
 	@GetMapping("/pa/one")
+	@Transactional(rollbackFor = Exception.class)
 	public LotterySsq paData() {
 		newLOt = netData.getNewLOt();
 		if(newLOt!=null){
 			lot = ssqService.getLot(newLOt.getVersionid());
 		}
-		if(StringUtils.isEmpty(lot)){
+		if(!StringUtils.isEmpty(lot)){
 			LotterySsq lotterySsq = weifareSSQ.drawPrizeForNew();
-			if(StringUtils.isEmpty(lotterySsq)){
+			if(!StringUtils.isEmpty(lotterySsq)){
 				lotterySsq.setFlag(LotSticData.WQSTATUS);
 				ssqService.update(lotterySsq);
 			}
@@ -71,14 +92,13 @@ public class LotteryContrller {
 		return newLOt;
 	}
 	/**
-	 * 手工爬取全部数据存储
-	 * 不对外开放
+	 * 手工爬取数据更新校对
 	 * @return
 	 */
 	@GetMapping("/pa/all_list")
 	public void paAllData() {
 		try {
-			allBalls.netAllLotData();
+			allBalls.netAllLotData(1,LotSticData.UPDATE);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -92,6 +112,20 @@ public class LotteryContrller {
 		LotterySsq lotterySsq = weifareSSQ.drawPrizeForNew();
 		logger.info("获取最新开奖数据："+lotterySsq.toString());
 		return weifareSSQ.formatLot(lotterySsq.getRedareal(), lotterySsq.getBuleareal());
+	}
+	/**
+	 * 修改
+	 * @return
+	 */
+	@GetMapping("/up")
+	public int update(String no) {
+		int update=0;
+		LotterySsq lotterySsq = weifareSSQ.drawPrizeForNew();
+		if(!StringUtils.isEmpty(lotterySsq)){
+			lotterySsq.setFlag(LotSticData.WQSTATUS);
+			 update =ssqService.update(lotterySsq);
+		}
+		return update;
 	}
 
 }

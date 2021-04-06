@@ -13,6 +13,10 @@ public interface Lotterys {
 	 */
 	String drawPrize(String versionId);
 
+	/**
+	 * 随机出号
+	 * @return
+	 */
 	String randomLottery();
 
 }

@@ -4,6 +4,7 @@ import com.data.loderdate.LotSticData;
 import com.generator.lottery.entity.LotterySsq;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -24,6 +25,7 @@ import java.util.regex.Pattern;
  * @create 2021-03-13
  */
 @Component
+@PropertySource(value = "classpath:otherConf/lotConfig.properties")
 public class NetData {
 	private static Logger logger = LoggerFactory.getLogger(NetData.class);
 	private String urlAdd= LotSticData.SSQ;
@@ -45,7 +47,7 @@ public class NetData {
 			int len;
 			while ((len=inputStream.read(bytes))!=-1){
 			}
-			String date = new String(bytes);
+			String date = new String(bytes,"UTF-8");
 			logger.info("爬取的数据:"+date);
 			int star = date.indexOf("bor_rnone");
 			int end = date.indexOf("</div>");

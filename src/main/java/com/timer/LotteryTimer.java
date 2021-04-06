@@ -45,7 +45,7 @@ public class LotteryTimer {
 		}
 		if(StringUtils.isEmpty(lot)){
 			LotterySsq lotterySsq = weifareSSQ.drawPrizeForNew();
-			if(StringUtils.isEmpty(lotterySsq)){
+			if(!StringUtils.isEmpty(lotterySsq)){
 				lotterySsq.setFlag(LotSticData.WQSTATUS);
 				ssqService.update(lotterySsq);
 			}

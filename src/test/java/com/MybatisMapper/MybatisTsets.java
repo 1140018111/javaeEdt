@@ -2,6 +2,7 @@ package com.MybatisMapper;
 
 import com.data.interdata.lotterydata.AllBalls;
 import com.data.interdata.lotterydata.NetData;
+import com.data.loderdate.LotSticData;
 import com.generator.dao.UserMapper;
 import com.generator.entity.*;
 import com.generator.lottery.entity.LotterySsq;
@@ -189,7 +190,9 @@ public class MybatisTsets {
 	//彩票程序
 	@Test
 	public void fileTest() throws Exception {
-
+		LotterySsq lot = ssqService.getLot("2021031");
+		lot.setFlag(LotSticData.WQSTATUS);
+		ssqService.update(lot);
 //		File file = new File("fic");
 //		boolean mkdir = file.mkdir();
 //		File file1 = new File(file.getAbsolutePath(), "1.java");
